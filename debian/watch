@@ -1,0 +1,3 @@
+version=3
+opts=dversionmangle=s/(\da?)[\+\.\-~](?:dfsg|debian|ds|repack|repacked)\.?\d*$/$1/,filenamemangle=s/.+\/v?(\d\S*)\.tar\.gz/apktool-$1\.tar\.gz/ \
+  https://github.com/JesusFreke/smali/tags .*/v?(\d\S*)\.tar\.gz

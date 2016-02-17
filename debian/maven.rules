@@ -1,0 +1,7 @@
+
+junit junit * s/.*/4.x/ * *
+com.google.code.findbugs jsr305 * s/.*/0.x/ * *
+org.apache.commons commons-lang3 * s/.*/3.x/ * *
+org.antlr antlr * s/.*/3.x/ * *
+org.antlr antlr-runtime * s/.*/3.x/ * *
+org.antlr stringtemplate * s/.*/3.x/ * *

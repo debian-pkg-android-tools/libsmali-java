@@ -1,0 +1,5 @@
+libsmali-java (2.1.2-1) unstable; urgency=medium
+
+  * Initial release (Closes: #808397)
+
+ -- Markus Koschany <apo@debian.org>  Wed, 17 Feb 2016 17:27:21 +0100
