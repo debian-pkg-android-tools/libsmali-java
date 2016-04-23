@@ -14,12 +14,6 @@ Files: deodexerant/*
 Copyright: 2011-2016, Google Inc.
 License: BSD-3-clause-Google
 
-Files: scripts/*
-       util/src/main/java/org/jf/util/ExceptionWithContext.java
-       util/src/main/java/org/jf/util/Utf8Utils.java
-Copyright: 2007 The Android Open Source Project
-License: Apache-2.0
-
 Files: smali/src/main/java/org/jf/smali/SmaliOptions.java
        smali/build.gradle
        smali/src/main/java/org/jf/smali/SmaliMethodParameter.java
@@ -63,6 +57,19 @@ License: BSD-3-clause-Google
 Files: smalidea/src/main/antlr/smalideaParser.g
 Copyright: 2010-2016, Ben Gruver
 License: BSD-3-clause
+
+Files: smalidea/src/test/java/org/jf/smalidea/LightCodeInsightParsingTestCase.java
+       smalidea/src/main/java/org/jf/smalidea/errorReporting/ITNProxy.java
+Copyright: 2000-2014 JetBrains s.r.o.
+License: Apache-2.0
+
+Files: scripts/*
+       util/src/main/java/org/jf/util/ExceptionWithContext.java
+       util/src/main/java/org/jf/util/Utf8Utils.java
+       smalidea/src/main/java/org/jf/smalidea/errorReporting/GithubFeedbackTask.java
+       smalidea/src/main/java/org/jf/smalidea/errorReporting/ErrorReporter.java
+Copyright: 2007 The Android Open Source Project
+License: Apache-2.0
 
 Files: debian/*
 Copyright: 2016, Markus Koschany <apo@debian.org>
