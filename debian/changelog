@@ -7,8 +7,9 @@ libsmali-java (2.1.3-1) unstable; urgency=medium
   * Update short description.
   * Add build.patch and always build Java 6 class files.
   * Tighten build-dependency on libgradle-jflex-plugin-java.
+  * libsmali-java.poms: Use wildcards for version.
 
- -- Markus Koschany <apo@debian.org>  Tue, 19 Jul 2016 19:09:16 +0200
+ -- Markus Koschany <apo@debian.org>  Wed, 27 Jul 2016 11:19:44 +0200
 
 libsmali-java (2.1.2-1) unstable; urgency=medium
 
