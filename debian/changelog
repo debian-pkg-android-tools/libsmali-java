@@ -12,7 +12,7 @@ libsmali-java (2.1.3-1) unstable; urgency=medium
   * Update debian/copyright for new release.
   * Update pom files for new release.
 
- -- Markus Koschany <apo@debian.org>  Wed, 27 Jul 2016 11:19:44 +0200
+ -- Markus Koschany <apo@debian.org>  Wed, 27 Jul 2016 15:28:18 +0200
 
 libsmali-java (2.1.2-1) unstable; urgency=medium
 
