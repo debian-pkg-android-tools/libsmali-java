@@ -14,7 +14,7 @@ Build-Depends:
  libantlr3-runtime-java,
  maven-repo-helper,
  libcommons-cli-java,
- libgradle-jflex-plugin-java,
+ libgradle-jflex-plugin-java (>= 0.0.2-3),
  libjgit-java,
  libguava-java,
  libjsr305-java,
