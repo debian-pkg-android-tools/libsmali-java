@@ -19,7 +19,8 @@ Files: smali/src/main/java/org/jf/smali/SmaliOptions.java
        smali/src/main/java/org/jf/smali/SmaliMethodParameter.java
        smali/src/main/java/org/jf/smali/SmaliTestUtils.java
        smali/src/main/java/org/jf/smali/WithRegister.java
-       smali/src/test/java/ImplicitReferenceTest.java
+       smali/src/test/java/org/jf/smali/ImplicitReferenceTest.java
+       baksmali/src/test/java/org/jf/baksmali/ImplicitReferenceTest.java
        smalidea/*
        util/build.gradle
        util/src/main/java/org/jf/util/AbstractForwardSequentialList.java

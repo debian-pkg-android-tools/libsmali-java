@@ -5,9 +5,11 @@ libsmali-java (2.1.3-1) unstable; urgency=medium
   * Use Android Tools Maintainers as name.
   * Add missing Apache-2.0 licensed files to debian/copyright.
   * Update short description.
-  * Add build.patch and always build Java 6 class files.
+  * Add build.patch and always build Java 6 class files. Remove
+    lintian-override.
   * Tighten build-dependency on jflex and libgradle-jflex-plugin-java.
   * libsmali-java.poms: Use wildcards for version.
+  * Update debian/copyright for new release.
 
  -- Markus Koschany <apo@debian.org>  Wed, 27 Jul 2016 11:19:44 +0200
 
