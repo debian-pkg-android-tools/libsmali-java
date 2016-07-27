@@ -52,6 +52,13 @@ Files: smali/src/main/java/org/jf/smali/SmaliOptions.java
        util/src/test/java/org/jf/util/NumberUtilsTest.java
        util/src/test/java/org/jf/util/StringWrapperTest.java
        util/src/test/java/org/jf/util/TextUtilsTest.java
+       baksmali/src/test/java/org/jf/baksmali/LargeLocalTest.java
+       smali/src/test/java/org/jf/smali/ByteLiteralTest.java
+       smali/src/test/java/org/jf/smali/ImplicitReferenceTest.java
+       smali/src/test/java/org/jf/smali/IntLiteralTest.java
+       smali/src/test/java/org/jf/smali/LexerTest.java
+       smali/src/test/java/org/jf/smali/LongLiteralTest.java
+       smali/src/test/java/org/jf/smali/ShortLiteralTest.java
 Copyright: 2012-2016, Google Inc.
 License: BSD-3-clause-Google
 
