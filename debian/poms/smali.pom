@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.smali</groupId>
   <artifactId>smali</artifactId>
-  <version>2.1.2</version>
+  <version>2.1.3</version>
   <name>smali</name>
   <description>smali is an assembler for dalvik bytecode</description>
   <url>http://smali.org</url>
@@ -28,7 +28,7 @@
     <dependency>
       <groupId>org.smali</groupId>
       <artifactId>dexlib2</artifactId>
-      <version>2.1.2</version>
+      <version>2.1.3</version>
       <scope>compile</scope>
       <exclusions>
         <exclusion>
@@ -60,7 +60,7 @@
     <dependency>
       <groupId>org.smali</groupId>
       <artifactId>util</artifactId>
-      <version>2.1.2</version>
+      <version>2.1.3</version>
       <scope>compile</scope>
       <exclusions>
         <exclusion>
