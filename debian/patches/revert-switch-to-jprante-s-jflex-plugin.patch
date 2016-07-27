@@ -2,6 +2,11 @@ From: Markus Koschany <apo@debian.org>
 Date: Wed, 27 Jul 2016 11:00:08 +0200
 Subject: revert switch to jprante's jflex plugin
 
+I couldn't get it to work with the new version of gradle-jflex-plugin.
+Whoever wants to give it a try, I have pushed my work to the experimental
+branch (gradle-jflex-plugin). Gradle just couldn't find the new plugin.
+
+Forwarded: not-needed
 ---
  build.gradle       |  3 ++-
  smali/build.gradle | 12 +++++++++---
