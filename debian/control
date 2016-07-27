@@ -9,7 +9,7 @@ Build-Depends:
  debhelper (>= 9),
  default-jdk,
  gradle-debian-helper,
- jflex,
+ jflex (>= 1.6.1),
  junit4,
  libantlr3-runtime-java,
  maven-repo-helper,
