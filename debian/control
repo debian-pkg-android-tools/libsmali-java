@@ -14,10 +14,10 @@ Build-Depends:
  junit4,
  libantlr3-runtime-java,
  maven-repo-helper,
- libcommons-cli-java,
  libgradle-jflex-plugin-java (>= 0.0.2-3),
  libjgit-java,
  libguava-java,
+ libjcommander-java,
  libjsr305-java,
  libstringtemplate-java,
  proguard
