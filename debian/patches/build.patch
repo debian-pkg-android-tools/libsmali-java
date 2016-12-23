@@ -22,10 +22,3 @@ index 56aaa3f..f3c445d 100644
  
      version = parent.version
  
-@@ -197,4 +199,4 @@ buildscript {
- 
- task wrapper(type: Wrapper) {
-     gradleVersion = '2.14'
--}
-\ No newline at end of file
-+}

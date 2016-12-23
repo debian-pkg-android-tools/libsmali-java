@@ -12,22 +12,25 @@ Forwarded: not-needed
  smali/build.gradle | 12 +++++++++---
  2 files changed, 11 insertions(+), 4 deletions(-)
 
-diff --git a/build.gradle b/build.gradle
-index f3c445d..22b493e 100644
 --- a/build.gradle
 +++ b/build.gradle
-@@ -107,7 +107,8 @@ subprojects {
+@@ -107,7 +107,8 @@
+                 antlr_runtime: 'org.antlr:antlr-runtime:3.5.2',
                  antlr: 'org.antlr:antlr:3.5.2',
                  stringtemplate: 'org.antlr:stringtemplate:3.2.1',
-                 commons_cli: 'commons-cli:commons-cli:1.2',
 -                jflex_plugin: 'org.xbib.gradle.plugin:gradle-plugin-jflex:1.1.0',
 +                jflex: 'de.jflex:jflex:1.6.1',
 +                jflex_plugin: 'co.tomlee.gradle.plugins:gradle-jflex-plugin:0.0.2',
                  proguard_gradle: 'net.sf.proguard:proguard-gradle:5.2.1',
                  dx: 'com.google.android.tools:dx:1.7',
-                 gson: 'com.google.code.gson:gson:2.3.1'
-diff --git a/smali/build.gradle b/smali/build.gradle
-index 318b5a9..a892399 100644
+                 gson: 'com.google.code.gson:gson:2.3.1',
+@@ -201,4 +202,4 @@
+ task wrapper(type: Wrapper) {
+     gradleVersion = '3.1'
+     distributionType = Wrapper.DistributionType.ALL
+-}
+\ No newline at end of file
++}
 --- a/smali/build.gradle
 +++ b/smali/build.gradle
 @@ -30,7 +30,7 @@
@@ -39,7 +42,7 @@ index 318b5a9..a892399 100644
  
  buildscript {
      repositories {
-@@ -46,8 +46,13 @@ configurations {
+@@ -46,8 +46,13 @@
      // Remove the full antlr library that's added by the antlr plugin. We manually
      // add the smaller antlr_runtime library instead
      compile.exclude group: 'org.antlr', module: 'antlr'
@@ -53,7 +56,7 @@ index 318b5a9..a892399 100644
  sourceSets {
      main {
          resources {
-@@ -82,6 +87,7 @@ dependencies {
+@@ -82,6 +87,7 @@
      testCompile depends.junit
  
      antlr depends.antlr
@@ -61,7 +64,7 @@ index 318b5a9..a892399 100644
  }
  
  processResources.inputs.property('version', version)
-@@ -114,8 +120,8 @@ generateGrammarSource {
+@@ -114,8 +120,8 @@
      outputDirectory = new File(outputDirectory, 'org/jf/smali')
  }
  
