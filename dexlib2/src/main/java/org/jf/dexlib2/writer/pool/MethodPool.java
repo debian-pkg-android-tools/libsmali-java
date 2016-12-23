@@ -31,30 +31,25 @@
 
 package org.jf.dexlib2.writer.pool;
 
+import org.jf.dexlib2.iface.reference.MethodProtoReference;
 import org.jf.dexlib2.iface.reference.MethodReference;
 import org.jf.dexlib2.writer.MethodSection;
 
 import javax.annotation.Nonnull;
 
 public class MethodPool extends BaseIndexPool<MethodReference>
-        implements MethodSection<CharSequence, CharSequence, ProtoPool.Key, MethodReference, PoolMethod> {
-    @Nonnull private final StringPool stringPool;
-    @Nonnull private final TypePool typePool;
-    @Nonnull private final ProtoPool protoPool;
+        implements MethodSection<CharSequence, CharSequence, MethodProtoReference, MethodReference, PoolMethod> {
 
-    public MethodPool(@Nonnull StringPool stringPool, @Nonnull TypePool typePool,
-                      @Nonnull ProtoPool protoPool) {
-        this.stringPool = stringPool;
-        this.typePool = typePool;
-        this.protoPool = protoPool;
+    public MethodPool(@Nonnull DexPool dexPool) {
+        super(dexPool);
     }
 
     public void intern(@Nonnull MethodReference method) {
         Integer prev = internedItems.put(method, 0);
         if (prev == null) {
-            typePool.intern(method.getDefiningClass());
-            protoPool.intern(method);
-            stringPool.intern(method.getName());
+            dexPool.typeSection.intern(method.getDefiningClass());
+            dexPool.protoSection.intern(new PoolMethodProto(method));
+            dexPool.stringSection.intern(method.getName());
         }
     }
 
@@ -62,12 +57,12 @@ public class MethodPool extends BaseIndexPool<MethodReference>
         return methodReference.getDefiningClass();
     }
 
-    @Nonnull @Override public ProtoPool.Key getPrototype(@Nonnull MethodReference methodReference) {
-        return new ProtoPool.Key(methodReference);
+    @Nonnull @Override public MethodProtoReference getPrototype(@Nonnull MethodReference methodReference) {
+        return new PoolMethodProto(methodReference);
     }
 
-    @Nonnull @Override public ProtoPool.Key getPrototype(@Nonnull PoolMethod poolMethod) {
-        return new ProtoPool.Key(poolMethod);
+    @Nonnull @Override public MethodProtoReference getPrototype(@Nonnull PoolMethod poolMethod) {
+        return new PoolMethodProto(poolMethod);
     }
 
     @Nonnull @Override public CharSequence getName(@Nonnull MethodReference methodReference) {
