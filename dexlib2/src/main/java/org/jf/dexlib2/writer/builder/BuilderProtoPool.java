@@ -32,71 +32,70 @@
 package org.jf.dexlib2.writer.builder;
 
 import com.google.common.collect.Maps;
+import org.jf.dexlib2.iface.reference.MethodProtoReference;
 import org.jf.dexlib2.iface.reference.MethodReference;
+import org.jf.dexlib2.immutable.reference.ImmutableMethodProtoReference;
 import org.jf.dexlib2.util.MethodUtil;
 import org.jf.dexlib2.writer.ProtoSection;
-import org.jf.util.CharSequenceUtils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentMap;
 
-class BuilderProtoPool
-        implements ProtoSection<BuilderStringReference, BuilderTypeReference, BuilderProtoReference, BuilderTypeList> {
-    @Nonnull private final BuilderContext context;
-    @Nonnull private final ConcurrentMap<ProtoKey, BuilderProtoReference> internedItems =
+class BuilderProtoPool extends BaseBuilderPool
+        implements ProtoSection<BuilderStringReference, BuilderTypeReference, BuilderMethodProtoReference, BuilderTypeList> {
+    @Nonnull private final ConcurrentMap<MethodProtoReference, BuilderMethodProtoReference> internedItems =
             Maps.newConcurrentMap();
 
-    BuilderProtoPool(@Nonnull BuilderContext context) {
-        this.context = context;
+    public BuilderProtoPool(@Nonnull DexBuilder dexBuilder) {
+        super(dexBuilder);
     }
 
-    @Nonnull public BuilderProtoReference internProto(@Nonnull List<? extends CharSequence> parameters,
-                                                      @Nonnull String returnType) {
-        ProtoKey key = new Key(parameters, returnType);
-        BuilderProtoReference ret = internedItems.get(key);
+    @Nonnull public BuilderMethodProtoReference internMethodProto(@Nonnull MethodProtoReference methodProto) {
+        BuilderMethodProtoReference ret = internedItems.get(methodProto);
         if (ret != null) {
             return ret;
         }
 
-        BuilderProtoReference protoReference = new BuilderProtoReference(
-                context.stringPool.internString(MethodUtil.getShorty(parameters, returnType)),
-                context.typeListPool.internTypeList(parameters),
-                context.typePool.internType(returnType));
+        BuilderMethodProtoReference protoReference = new BuilderMethodProtoReference(
+                dexBuilder.stringSection.internString(MethodUtil.getShorty(
+                        methodProto.getParameterTypes(), methodProto.getReturnType())),
+                dexBuilder.typeListSection.internTypeList(methodProto.getParameterTypes()),
+                dexBuilder.typeSection.internType(methodProto.getReturnType()));
         ret = internedItems.putIfAbsent(protoReference, protoReference);
         return ret==null?protoReference:ret;
     }
 
-    @Nonnull public BuilderProtoReference internProto(@Nonnull MethodReference methodReference) {
-        return internProto(methodReference.getParameterTypes(), methodReference.getReturnType());
+    @Nonnull public BuilderMethodProtoReference internMethodProto(@Nonnull MethodReference methodReference) {
+        return internMethodProto(new ImmutableMethodProtoReference(
+                methodReference.getParameterTypes(), methodReference.getReturnType()));
     }
 
-    @Nonnull @Override public BuilderStringReference getShorty(@Nonnull BuilderProtoReference key) {
-        return key.shorty;
+    @Nonnull @Override public BuilderStringReference getShorty(@Nonnull BuilderMethodProtoReference proto) {
+        return proto.shorty;
     }
 
-    @Nonnull @Override public BuilderTypeReference getReturnType(@Nonnull BuilderProtoReference key) {
-        return key.returnType;
+    @Nonnull @Override public BuilderTypeReference getReturnType(@Nonnull BuilderMethodProtoReference proto) {
+        return proto.returnType;
     }
 
-    @Nullable @Override public BuilderTypeList getParameters(@Nonnull BuilderProtoReference key) {
-        return key.parameterTypes;
+    @Nullable @Override public BuilderTypeList getParameters(@Nonnull BuilderMethodProtoReference proto) {
+        return proto.parameterTypes;
     }
 
-    @Override public int getItemIndex(@Nonnull BuilderProtoReference key) {
-        return key.index;
+    @Override public int getItemIndex(@Nonnull BuilderMethodProtoReference proto) {
+        return proto.getIndex();
     }
 
-    @Nonnull @Override public Collection<? extends Entry<? extends BuilderProtoReference, Integer>> getItems() {
-        return new BuilderMapEntryCollection<BuilderProtoReference>(internedItems.values()) {
-            @Override protected int getValue(@Nonnull BuilderProtoReference key) {
+    @Nonnull @Override public Collection<? extends Entry<? extends BuilderMethodProtoReference, Integer>> getItems() {
+        return new BuilderMapEntryCollection<BuilderMethodProtoReference>(internedItems.values()) {
+            @Override protected int getValue(@Nonnull BuilderMethodProtoReference key) {
                 return key.index;
             }
 
-            @Override protected int setValue(@Nonnull BuilderProtoReference key, int value) {
+            @Override protected int setValue(@Nonnull BuilderMethodProtoReference key, int value) {
                 int prev = key.index;
                 key.index = value;
                 return prev;
@@ -104,42 +103,7 @@ class BuilderProtoPool
         };
     }
 
-    // a placeholder interface to unify the temporary probing key and the BuilderProtoReference class
-    interface ProtoKey {
-        @Nonnull List<? extends CharSequence> getParameterTypes();
-        @Nonnull String getReturnType();
-    }
-
-    // a temporary lightweight class to allow a quick probe if the given prototype has already been interned
-    private static class Key implements ProtoKey {
-        @Nonnull private final List<? extends CharSequence> parameters;
-        @Nonnull private final String returnType;
-
-        public Key(@Nonnull List<? extends CharSequence> parameters, @Nonnull String returnType) {
-            this.parameters = parameters;
-            this.returnType = returnType;
-        }
-
-        @Nonnull public List<? extends CharSequence> getParameterTypes() {
-            return parameters;
-        }
-
-        @Nonnull public String getReturnType() {
-            return returnType;
-        }
-
-        @Override public int hashCode() {
-            int hashCode = returnType.hashCode();
-            return hashCode*31 + parameters.hashCode();
-        }
-
-        @Override public boolean equals(Object o) {
-            if (o != null && o instanceof ProtoKey) {
-                ProtoKey other = (ProtoKey)o;
-                return getReturnType().equals(other.getReturnType()) &&
-                        CharSequenceUtils.listEquals(getParameterTypes(), other.getParameterTypes());
-            }
-            return false;
-        }
+    @Override public int getItemCount() {
+        return internedItems.size();
     }
 }
