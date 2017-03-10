@@ -20,7 +20,7 @@ Build-Depends:
  libjcommander-java,
  libjsr305-java,
  libstringtemplate-java,
- proguard
+ proguard-cli
 Standards-Version: 3.9.8
 Homepage: https://github.com/JesusFreke/smali
 Vcs-Git: https://anonscm.debian.org/git/android-tools/libsmali-java.git
