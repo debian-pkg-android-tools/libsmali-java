@@ -1,0 +1,71 @@
+From: Markus Koschany <apo@debian.org>
+Date: Sat, 17 Jun 2017 23:35:59 +0200
+Subject: revert-switch-to-jprante-s-jflex-plugin
+
+I couldn't get it to work with the new version of gradle-jflex-plugin.
+Whoever wants to give it a try, I have pushed my work to the experimental
+branch (gradle-jflex-plugin). Gradle just couldn't find the new plugin.
+
+Forwarded: not-needed
+---
+ build.gradle       |  3 ++-
+ smali/build.gradle | 11 ++++++++---
+ 2 files changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/build.gradle b/build.gradle
+index 06719f2..238c4ba 100644
+--- a/build.gradle
++++ b/build.gradle
+@@ -114,7 +114,8 @@ subprojects {
+                 antlr_runtime: 'org.antlr:antlr-runtime:3.5.2',
+                 antlr: 'org.antlr:antlr:3.5.2',
+                 stringtemplate: 'org.antlr:stringtemplate:3.2.1',
+-                jflex_plugin: 'org.xbib.gradle.plugin:gradle-plugin-jflex:1.1.0',
++                jflex: 'de.jflex:jflex:1.6.1',
++                jflex_plugin: 'co.tomlee.gradle.plugins:gradle-jflex-plugin:0.0.2',
+                 proguard_gradle: 'net.sf.proguard:proguard-gradle:5.2.1',
+                 dx: 'com.google.android.tools:dx:1.7',
+                 gson: 'com.google.code.gson:gson:2.3.1',
+diff --git a/smali/build.gradle b/smali/build.gradle
+index 6472f21..72af2c5 100644
+--- a/smali/build.gradle
++++ b/smali/build.gradle
+@@ -30,7 +30,7 @@
+  */
+ 
+ apply plugin: 'antlr'
+-apply plugin: 'org.xbib.gradle.plugin.jflex'
++apply plugin: 'jflex'
+ 
+ buildscript {
+     repositories {
+@@ -46,6 +46,10 @@ configurations {
+     // Remove the full antlr library that's added by the antlr plugin. We manually
+     // add the smaller antlr_runtime library instead
+     compile.exclude group: 'org.antlr', module: 'antlr'
++
++    // The jflex lexer doesn't have any runtime dependencies, so remove the dependency
++    // that gets added by the jflex plugin
++    compile.exclude group: 'de.jflex', module: 'jflex'
+ }
+ 
+ sourceSets {
+@@ -82,6 +86,7 @@ dependencies {
+     testCompile depends.junit
+ 
+     antlr depends.antlr
++    jflex depends.jflex
+ }
+ 
+ processResources.inputs.property('version', version)
+@@ -114,8 +119,8 @@ generateGrammarSource {
+     outputDirectory = new File(outputDirectory, 'org/jf/smali')
+ }
+ 
+-jflex {
+-    generateDir = new File(generateDir, 'org/jf/smali')
++generateJFlexSource {
++    outputDirectory = new File(outputDirectory, 'org/jf/smali')
+ }
+ 
+ uploadArchives {
