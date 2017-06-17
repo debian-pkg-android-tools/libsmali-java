@@ -1,5 +1,5 @@
 /*
- * Copyright 2013, Google Inc.
+ * Copyright 2012, Google Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,47 +29,38 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.jf.dexlib2.builder;
+package org.jf.dexlib2.builder.instruction;
 
+import org.jf.dexlib2.Format;
 import org.jf.dexlib2.Opcode;
-import org.jf.dexlib2.iface.instruction.OffsetInstruction;
-import org.jf.util.ExceptionWithContext;
+import org.jf.dexlib2.builder.BuilderInstruction;
+import org.jf.dexlib2.iface.instruction.formats.Instruction3rc;
+import org.jf.dexlib2.iface.instruction.formats.Instruction3rms;
+import org.jf.dexlib2.iface.reference.Reference;
+import org.jf.dexlib2.util.Preconditions;
 
 import javax.annotation.Nonnull;
 
-public abstract class BuilderOffsetInstruction extends BuilderInstruction implements OffsetInstruction {
-    @Nonnull
-    protected final Label target;
+public class BuilderInstruction3rms extends BuilderInstruction implements Instruction3rms {
+    public static final Format FORMAT = Format.Format3rms;
 
-    public BuilderOffsetInstruction(@Nonnull Opcode opcode,
-                                    @Nonnull Label target) {
+    protected final int startRegister;
+    protected final int registerCount;
+    protected final int vtableIndex;
+
+    public BuilderInstruction3rms(@Nonnull Opcode opcode,
+                                  int startRegister,
+                                  int registerCount,
+                                  int vtableIndex) {
         super(opcode);
-        this.target = target;
+        this.startRegister = Preconditions.checkShortRegister(startRegister);
+        this.registerCount = Preconditions.checkRegisterRangeCount(registerCount);
+        this.vtableIndex = vtableIndex;
     }
 
-    @Override public int getCodeOffset() {
-        int codeOffset = internalGetCodeOffset();
-        if (this.getCodeUnits() == 1) {
-            if (codeOffset < Byte.MIN_VALUE || codeOffset > Byte.MAX_VALUE) {
-                throw new ExceptionWithContext("Invalid instruction offset: %d. " +
-                        "Offset must be in [-128, 127]", codeOffset);
-            }
-        } else if (this.getCodeUnits() == 2) {
-            if (codeOffset < Short.MIN_VALUE || codeOffset > Short.MAX_VALUE) {
-                throw new ExceptionWithContext("Invalid instruction offset: %d. " +
-                        "Offset must be in [-32768, 32767]", codeOffset);
-            }
-        }
-        return codeOffset;
-    }
-
-
-    int internalGetCodeOffset() {
-        return target.getCodeAddress() - this.getLocation().getCodeAddress();
-    }
-
-    @Nonnull
-    public Label getTarget() {
-        return target;
-    }
+    @Override public int getStartRegister() { return startRegister; }
+    @Override public int getRegisterCount() { return registerCount; }
+    @Override public int getVtableIndex() { return vtableIndex; }
+    @Override public Format getFormat() { return FORMAT; }
 }
+

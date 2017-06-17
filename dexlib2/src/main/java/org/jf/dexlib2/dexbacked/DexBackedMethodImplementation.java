@@ -36,6 +36,7 @@ import org.jf.dexlib2.dexbacked.instruction.DexBackedInstruction;
 import org.jf.dexlib2.dexbacked.raw.CodeItem;
 import org.jf.dexlib2.dexbacked.util.DebugInfo;
 import org.jf.dexlib2.dexbacked.util.FixedSizeList;
+import org.jf.dexlib2.dexbacked.util.VariableSizeListIterator;
 import org.jf.dexlib2.dexbacked.util.VariableSizeLookaheadIterator;
 import org.jf.dexlib2.iface.MethodImplementation;
 import org.jf.dexlib2.iface.debug.DebugItem;
@@ -84,7 +85,7 @@ public class DexBackedMethodImplementation implements MethodImplementation {
                         // Does the instruction extend past the end of the method?
                         int offset = reader.getOffset();
                         if (offset > endOffset || offset < 0) {
-                            throw new ExceptionWithContext("The last instruction in the method is truncated");
+                            throw new ExceptionWithContext("The last instruction in method %s is truncated", method);
                         }
                         return instruction;
                     }
@@ -147,5 +148,35 @@ public class DexBackedMethodImplementation implements MethodImplementation {
     @Nonnull
     public Iterator<String> getParameterNames(@Nullable DexReader dexReader) {
         return getDebugInfo().getParameterNames(dexReader);
+    }
+
+    /**
+     * Calculate and return the private size of a method implementation.
+     *
+     * Calculated as: debug info size + instructions size + try-catch size
+     *
+     * @return size in bytes
+     */
+    public int getSize() {
+        int debugSize = getDebugInfo().getSize();
+
+        //set last offset just before bytecode instructions (after insns_size)
+        int lastOffset = codeOffset + CodeItem.INSTRUCTION_START_OFFSET;
+
+        //set code_item ending offset to the end of instructions list (insns_size * ushort)
+        lastOffset += dexFile.readSmallUint(codeOffset + CodeItem.INSTRUCTION_COUNT_OFFSET) * 2;
+
+        //read any exception handlers and move code_item offset to the end
+        for (DexBackedTryBlock tryBlock: getTryBlocks()) {
+            Iterator<? extends DexBackedExceptionHandler> tryHandlerIter =
+                tryBlock.getExceptionHandlers().iterator();
+            while (tryHandlerIter.hasNext()) {
+                tryHandlerIter.next();
+            }
+            lastOffset = ((VariableSizeListIterator)tryHandlerIter).getReaderOffset();
+        }
+
+        //method impl size = debug block size + code_item size
+        return debugSize + (lastOffset - codeOffset);
     }
 }

@@ -38,7 +38,6 @@ import com.beust.jcommander.ParametersDelegate;
 import com.beust.jcommander.validators.PositiveInteger;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import org.jf.dexlib2.Opcodes;
 import org.jf.dexlib2.util.SyntheticAccessorResolver;
 import org.jf.util.StringWrapper;
 import org.jf.util.jcommander.ExtendedParameter;
@@ -133,6 +132,10 @@ public class DisassembleCommand extends DexInputCommand {
                     "fields from the current class.")
     private boolean implicitReferences = false;
 
+    @Parameter(names = "--allow-odex-opcodes",
+            description = "Allows odex opcodes to be disassembled, even if the result won't be able to be reassembled.")
+    private boolean allowOdex = false;
+
     @Parameter(names = "--classes",
             description = "A comma separated list of classes. Only disassemble these classes")
     @ExtendedParameter(argumentNames = "classes")
@@ -155,7 +158,7 @@ public class DisassembleCommand extends DexInputCommand {
         }
 
         String input = inputList.get(0);
-        loadDexFile(input, Opcodes.getDefault());
+        loadDexFile(input);
 
         if (showDeodexWarning() && dexFile.hasOdexOpcodes()) {
             StringWrapper.printWrappedString(System.err,
@@ -281,6 +284,10 @@ public class DisassembleCommand extends DexInputCommand {
         if (accessorComments) {
             options.syntheticAccessorResolver = new SyntheticAccessorResolver(dexFile.getOpcodes(),
                     dexFile.getClasses());
+        }
+
+        if (allowOdex) {
+            options.allowOdex = true;
         }
 
         return options;
