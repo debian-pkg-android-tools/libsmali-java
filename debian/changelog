@@ -1,9 +1,18 @@
-libsmali-java (2.2~b4-1) unstable; urgency=medium
+libsmali-java (2.2.1-1) UNRELEASED; urgency=medium
 
-  * New upstream release
-  * Team upload
+  [ Hans-Christoph Steiner ]
+  * Team upload.
+  * default to sign-tags and pristine-tar
+  * Imported Upstream version 2.2~b4
+  * add myself to Uploaders:
+  * update Build-Depends: for new upstream release
+  * update debian/changelog for upload
+  * refresh patches for new upstream
+  * use proguard-cli to avoid pulling in 140 GUI deps
 
- -- Hans-Christoph Steiner <hans@eds.org>  Fri, 23 Dec 2016 11:32:10 +0100
+  [ Markus Koschany ]
+
+ -- Markus Koschany <apo@debian.org>  Sat, 17 Jun 2017 23:14:24 +0200
 
 libsmali-java (2.1.3-1) unstable; urgency=medium
 
