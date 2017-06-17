@@ -5,3 +5,4 @@ org.apache.commons commons-lang3 * s/.*/3.x/ * *
 org.antlr antlr * s/.*/3.x/ * *
 org.antlr antlr-runtime * s/.*/3.x/ * *
 org.antlr stringtemplate * s/.*/3.x/ * *
+com.beust jcommander * s/.*/1.x/ * *
