@@ -1,3 +1,9 @@
+libsmali-java (2.2.1-2) unstable; urgency=medium
+
+  * Upload to unstable.
+
+ -- Markus Koschany <apo@debian.org>  Mon, 19 Jun 2017 00:13:00 +0200
+
 libsmali-java (2.2.1-1) experimental; urgency=medium
 
   [ Hans-Christoph Steiner ]
