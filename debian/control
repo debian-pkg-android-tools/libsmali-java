@@ -7,7 +7,7 @@ Uploaders:
  Markus Koschany <apo@debian.org>
 Build-Depends:
  antlr3,
- debhelper (>= 10),
+ debhelper (>= 11),
  default-jdk,
  gradle-debian-helper,
  jflex (>= 1.6.1),
