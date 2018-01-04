@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.smali</groupId>
   <artifactId>dexlib2</artifactId>
-  <version>2.2.1</version>
+  <version>2.2.2</version>
   <name>dexlib2</name>
   <description>dexlib2 is a library for reading/modifying/writing Android dex files</description>
   <url>http://smali.org</url>
@@ -34,7 +34,7 @@
     <dependency>
       <groupId>org.smali</groupId>
       <artifactId>util</artifactId>
-      <version>2.2.1</version>
+      <version>2.2.2</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
