@@ -80,7 +80,7 @@ Copyright: 2007 The Android Open Source Project
 License: Apache-2.0
 
 Files: debian/*
-Copyright: 2016-2017, Markus Koschany <apo@debian.org>
+Copyright: 2016-2018, Markus Koschany <apo@debian.org>
 License: Apache-2.0
 
 License: Apache-2.0
