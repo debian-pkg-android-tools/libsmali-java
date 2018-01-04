@@ -1,4 +1,4 @@
-debian/poms/util.pom --has-package-version --java-lib --usj-name=smali-util --artifact=util/build/libs/util-*-dev.jar
-debian/poms/dexlib2.pom --has-package-version --java-lib --artifact=dexlib2/build/libs/dexlib2-*-dev.jar
-debian/poms/baksmali.pom --has-package-version --java-lib --artifact=baksmali/build/libs/baksmali-*-dev.jar
-debian/poms/smali.pom --has-package-version --java-lib --artifact=smali/build/libs/smali-*-dev.jar
+debian/poms/util.pom --java-lib --usj-name=smali-util --artifact=util/build/libs/util-*-dev.jar
+debian/poms/dexlib2.pom --java-lib --artifact=dexlib2/build/libs/dexlib2-*-dev.jar
+debian/poms/baksmali.pom --java-lib --artifact=baksmali/build/libs/baksmali-*-dev.jar
+debian/poms/smali.pom --java-lib --artifact=smali/build/libs/smali-*-dev.jar
