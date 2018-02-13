@@ -8,7 +8,7 @@ Uploaders:
 Build-Depends:
  antlr3,
  debhelper (>= 11),
- default-jdk,
+ default-jdk-headless,
  gradle-debian-helper,
  jflex (>= 1.6.1),
  junit4,
