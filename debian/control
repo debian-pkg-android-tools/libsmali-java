@@ -17,7 +17,7 @@ Build-Depends:
  libgradle-jflex-plugin-java (>= 0.0.2-3),
  libjgit-java,
  libguava-java,
- libjcommander-java,
+ libjcommander-java (>= 1.71-1~),
  libjsr305-java,
  libstringtemplate-java,
  proguard-cli
